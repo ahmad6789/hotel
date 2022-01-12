@@ -1,0 +1,11 @@
+{
+    "Article": false,
+    "Tag": false,
+    "Comment": false,
+    "Room": true,
+    "Reservation": true,
+    "Item": true,
+    "Ticket": true,
+    "Payment": true,
+    "Expense": true
+}
