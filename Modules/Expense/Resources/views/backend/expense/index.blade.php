@@ -94,7 +94,7 @@
 				@else
 					ajax: "{{ route('expense.gettable') }}/all",
 				@endif
-                columns: [ 
+                columns: [
                     {
                         data: 'type',
                         name: 'type',
@@ -152,7 +152,7 @@
             location.href = "{{ route('expense.edit') }}/" + id;
 
         });
-		
+
 		$(document).on('change', '#type', function() {
 			var type = $(this).find(':selected').val();
             location.href = "{{ route('expense.index') }}/" + type;
@@ -162,7 +162,7 @@
         success = "<i class=' c-icon cil-check'></i> {{__('Items.SUCCESS')}} <p>{{__('Items.Editing Successfully')}}</p>";
         @isset($editNotify)
             displayPopupNotification(success);
-        
+
         @endisset
 
         function displayPopupNotification(Message) {

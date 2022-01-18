@@ -11,8 +11,8 @@
 
 
                                                                 <button id="addRow" class="btn btn-primary">{{ __('Items.Add') }}
-                                                                    {{ __('Items.New') }}
-                                                                    {{ __('Items.Item') }} </button>
+                                                                    {{ __('Items.Item') }}   {{ __('Items.New') }}
+                                                                     </button>
                                                                 {{-- <button id="Delete"
                                                             title="{{ __('Items.To Delete the Item select the and click here') }}"
                                                             class="btn btn-danger">{{ __('Items.Delete') }}
@@ -195,7 +195,7 @@
 
 
                                                                                 $.ajax({
-                                                                                    url: "{{ route('roomItems.getAvailableItems') }}/" + @isset($id) {{ $id }}@endisset,
+                                                                                    url: "{{ route('roomItems.getAvailableItems') }}",
                                                                                     type: 'get',
                                                                                     dataType: 'json',
 
@@ -231,7 +231,8 @@
                                                                                 e.preventDefault();
                                                                                 e.stopImmediatePropagation();
                                                                                 var form = $(this);
-                                                                                var data = form.serialize();
+                                                                                var data = form.serialize()
+                                                                                console.log(form.serialize());
                                                                                 $.ajax({
                                                                                     url: "{{ route('roomItems.update') }}",
                                                                                     type: 'get',
@@ -243,7 +244,9 @@
 
                                                                                             location.reload();
 
-                                                                                        } else {}
+                                                                                        } else {
+                                                                                            console.log(response.response)
+                                                                                        }
                                                                                     }
                                                                                 });
                                                                             });

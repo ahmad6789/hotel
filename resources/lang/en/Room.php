@@ -8,6 +8,12 @@ return [
     "Edit"  =>  "Edit",
     "Delete"  =>  "Delete",
     "Room"  =>  "Room",
+
+    "OnBed" => "Individual",
+    "TowBed" => "Double",
+    "FourthBed" => "Four Person",
+    "people" => "people",
+
     "NOR"  =>  "Number of Rooms",
     "Category"  =>  "Floor",
     "Bed"  =>  "Bed",

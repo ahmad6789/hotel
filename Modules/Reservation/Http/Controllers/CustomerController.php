@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
-	
+
 	public function __construct()
     {
         // Page Title
@@ -25,13 +25,13 @@ class CustomerController extends Controller
         // module name
         $this->module_name = 'Customer';
         // directory path of the module
-        $this->module_path = 'customer';  
+        $this->module_path = 'customer';
         // module icon
         $this->module_icon = 'fas fa-person';
         // module model name, path
         $this->module_model = "Modules\Reservation\Entities\Customer";
     }
-	
+
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -46,29 +46,58 @@ class CustomerController extends Controller
 
         return view("reservation::backend.$module_path.index");
     }
-	
+
 	public function gettable(Request $request){
         if ($request->ajax()) {
-			
-			$data = Customer::select('id', 'firstname', 'lastname', 'idnumber', 'phone1', 'email')->get();
+
+			$data = Customer::select('id','blacklist', 'firstname', 'lastname', 'idnumber', 'phone1', 'email')->get();
 			//dd($data);
             return Datatables::of($data)
 			->addIndexColumn()
 			->addColumn('action', function($row){
-				$btn = '';
+                $btn1 = '
+
+                        <a href="#" data-id="'.$row->id.'"
+                        class="btn btn-dark btn-sm  blacklist" data-toggle="modal" data-target="#myModal">'. __('reservation.UnBlock').'</a>
+
+
+                        ';
+                $btn2 = '
+
+                        <a href="#" data-id="'.$row->id.'"
+                        class="btn btn-ghost-danger btn-sm  blacklist" data-toggle="modal" data-target="#myModal">'. __('reservation.Block').'</a>
+
+
+                        ';
+                if($row['blacklist']==1)
+                    $btn = $btn1;
+                else
+                    $btn = $btn2;
+
 				return $btn;
 			})
 			->make(true);
         }
+    }
+
+    public function blackList($id){
+        $customer = Customer::find($id);
+        if($customer['blacklist']!=1)
+            return Customer::where('id',$id)->update(['blacklist'=>1]);
+        else
+            return Customer::where('id',$id)->update(['blacklist'=>null]);
+
+        return redirect()->route('customer.index');
+
     }
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
     public function create($id = 0)
-    { 	
+    {
         $module_path = $this->module_path;
-		
+
         return json_encode(array('response'=>true, 'data'=>array('id'=>1, 'name'=>'customer')));
     }
 
@@ -98,14 +127,14 @@ class CustomerController extends Controller
 		$customer->city = $request->city;
 		$customer->country = $request->country;
 		$customer->nationality = $request->nationality;
-		
+
 		$save = $customer->save();
-		
+
 		$customer->name = $this->customer_name_with_id($customer);
 		echo json_encode(array('response'=>$save, 'data'=>$customer));
 		die();
     }
-	
+
 	public function customer_name_with_id($customer){
 		$name = $customer->firstname . ' ' . $customer->lastname . ' (' . $customer->idnumber . ')';
 		return $name;

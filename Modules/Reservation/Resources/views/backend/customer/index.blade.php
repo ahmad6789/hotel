@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 @section('content')
- 
+
     <div class='container-sm text-info ' style="align: center">
 		<center>
 			<h1 class="text-success mt-4">{{ __('reservation.customer')}}</h1>
 		</center>
-		
+
 		<div clsss="table-responsive">
 			<div class="row">
 				<div class="col-8">
@@ -23,12 +23,12 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<table class="table table-bordered data-table table-condensed table-hover">
 			<thead>
 				<tr>
 					<th class='text-success'></th>
-					<th class='text-success'>{{ __('reservation.firstname')}}</th>
+					<th class='text-success'>{{ __('reservation.firstname')}} </th>
 					<th class='text-success'>{{ __('reservation.lastname')}}</th>
 					<th class='text-info '>{{ __('reservation.idnumber')}}</th>
 					<th class='text-muted '>{{ __('reservation.phone')}}</th>
@@ -37,13 +37,13 @@
 				</tr>
 			</thead>
 			<tbody>
-			
+
 			</tbody>
 		</table>
 		<div id="sticky">
 		</div>
 	</div>
-	
+
 	<!-- Modal -->
 	<div id="addCustomer" class="modal fade" role="dialog">
 		<div class="modal-dialog" style="max-width:80%">
@@ -60,17 +60,17 @@
 						<h1 class="text-center" style="color:#303c54">
 							{{ __("reservation.addcustomertitle")}}
 						</h1>
-						 
+
 						<div class="row">
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="firstname">{{ __("reservation.firstname")}}</label>
+									<label for="firstname">{{ __("reservation.firstname")}} <span style="color: red"> *</span></label>
 									<input type="text" id="firstname" name="firstname" class="form-control" required />
 								</div>
 							</div>
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="lastname">{{ __("reservation.lastname")}}</label>
+									<label for="lastname">{{ __("reservation.lastname")}} <span style="color: red"> *</span></label>
 									<input type="text" id="lastname" name="lastname" class="form-control" required />
 								</div>
 							</div>
@@ -78,16 +78,16 @@
 						<div class="row">
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="birthdate">{{ __("reservation.birthdate")}}</label>
+									<label for="birthdate">{{ __("reservation.birthdate")}} <span style="color: red"> *</span></label>
 									<input type="date" id="birthdate" name="birthdate" class="form-control" required />
 								</div>
 							</div>
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="name">{{ __("reservation.sex")}}</label>
+									<label for="name">{{ __("reservation.sex")}} <span style="color: red"> *</span></label>
 									<div>
 										<input type="radio" class="" name="sex" id="sex-m" value="m">
-										<label class="" for="sex-m">{{ __("reservation.male")}}</label>
+										<label class="" for="sex-m">{{ __("reservation.male")}} </label>
 
 										<input type="radio" class="" name="sex" id="sex-f" value="f">
 										<label class="" for="sex-f">{{ __("reservation.female")}}</label>
@@ -98,17 +98,17 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="idnumber">{{ __("reservation.idnumber")}}</label>
+									<label for="idnumber">{{ __("reservation.idnumber")}} <span style="color: red"> *</span></label>
 									<input type="text" id="idnumber" name="idnumber" class="form-control" required />
 								</div>
 							</div>
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="name">{{ __("reservation.idtype")}}</label>
+									<label for="name">{{ __("reservation.idtype")}} <span style="color: red"> *</span></label>
 									<div>
 										<input type="radio" class="" name="idtype" id="id-id" value="id">
 										<label class="" for="id-id">{{ __("reservation.id")}}</label>
@@ -119,7 +119,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
 						<div class="col col-sm-6">
 								<div class="form-group">
@@ -129,7 +129,7 @@
 							</div>
 							<div class="col col-sm-6">
 								<div class="form-group">
-									<label for="phone1">{{ __("reservation.phone1")}}</label>
+									<label for="phone1">{{ __("reservation.phone1")}} <span style="color: red"> *</span></label>
 									<input id="phone1" name="phone1" type="text" class="form-control" required />
 								</div>
 							</div>
@@ -140,7 +140,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
 							<div class="col col-sm-6">
 								<div class="form-group">
@@ -156,23 +156,23 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
 							<div class="col col-sm-4">
 								<div class="form-group">
-									<label for="city">{{ __("reservation.city")}}</label>
+									<label for="city">{{ __("reservation.city")}} <span style="color: red"> *</span></label>
 									<input id="city" name="city" type="text" class="form-control" />
 								</div>
 							</div>
 							<div class="col col-sm-4">
 								<div class="form-group">
-									<label for="country">{{ __("reservation.country")}}</label>
+									<label for="country">{{ __("reservation.country")}} <span style="color: red"> *</span></label>
 									<input id="country" name="country" type="text" class="form-control" />
 								</div>
 							</div>
 							<div class="col col-sm-4">
 								<div class="form-group">
-									<label for="nationality">{{ __("reservation.nationality")}}</label>
+									<label for="nationality">{{ __("reservation.nationality")}} <span style="color: red"> *</span></label>
 									<input id="nationality" name="nationality" type="text" class="form-control" />
 								</div>
 							</div>
@@ -189,8 +189,8 @@
 
 		</div>
 	</div>
-	
-	
+
+
 	<script type="text/javascript">
 		$(document).on('click', '#customer-submit', function(e) {
 			e.preventDefault();
@@ -219,7 +219,18 @@
 				},
 			});
 		});
-		
+        $(document).on('click', '.blacklist', function() {
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                url: "{{ route('customer.blackList') }}/" + id,
+                type: 'get',
+                dataType: 'json',
+            });
+            location.reload();
+
+        });
+
         $(document).ready(function populate() {
 
             $.noConflict();

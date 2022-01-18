@@ -1,31 +1,24 @@
 <?php
 
 namespace Modules\Item\Http\Controllers;
+
+use App\Models\User;
 use App\Notifications\AddItemsToRooms;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
+use Auth;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Item\Entities\RoomItems;
-use Modules\Item\Entities\Item;
-use Modules\Room\Entities\Room;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Log;
-use DataTables;
-use App\Authorizable;
-use Auth;
-use Carbon\Carbon;
-use Flash;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Storage;
+use Modules\Item\Entities\Item;
+use Modules\Item\Entities\RoomItems;
+use Modules\Room\Entities\Room;
 
 class RoomItemsController extends Controller
 {
-
-
     public function __construct()
     {
         // Page Title
@@ -47,7 +40,8 @@ class RoomItemsController extends Controller
      */
     public function index($id=null)
     {
-         $module_path = $this->module_path;
+
+        $module_path = $this->module_path;
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_icon = $this->module_icon;
@@ -63,44 +57,39 @@ class RoomItemsController extends Controller
 
         $data = DB::table('items')
         ->join('room_items', 'items.id', '=', 'room_items.itemid')
-        ->select('items.name as name', 'room_items.quantity as quantity','room_items.roomid as roomid','room_items.itemid as itemid')
-        ->where('roomid',$id)
+        ->select('items.name as name', 'room_items.quantity as quantity', 'room_items.roomid as roomid', 'room_items.itemid as itemid')
+        ->where('roomid', $id)
         ->get();
         $room=Room::find($id);
         $code=$room->code;
         return view(
             "item::backend.$module_path.index",
-            compact('data','code','module_title', 'module_name', "$module_name", 'module_icon', 'module_name_singular', 'module_action')
+            compact('data','id', 'code', 'module_title', 'module_name', "$module_name", 'module_icon', 'module_name_singular', 'module_action')
         );
-
-
-
-
     }
 
-    public function getAvailableItems(Request $request,$id=null)
+    public function getAvailableItems(Request $request, $id=null)
     {
-         $module_path = $this->module_path;
+        $module_path = $this->module_path;
         $module_title = $this->module_title;
         $module_name = $this->module_name;
         $module_icon = $this->module_icon;
         $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
-          $Items= DB::table('room_items')
+        $Items= DB::table('room_items')
             ->select('itemid')
-            ->where('roomid',$id)
+            ->where('roomid', $id)
             ->get();
-        $roomitems=array();
+        $roomitems=[];
         foreach ($Items as $item) {
             $roomitems[]=$item->itemid;
         }
-              $items=DB::table('items')
-            ->select('name','id')
-            ->whereNotIn('id',$roomitems)
+        $items=DB::table('items')
+            ->select('name', 'id')
+            ->whereNotIn('id', $roomitems)
             ->get();
-            echo json_encode($items);
-            die();
-
+        echo json_encode($items);
+        die();
     }
 
     /**
@@ -117,7 +106,6 @@ class RoomItemsController extends Controller
         $module_name_singular = Str::singular($module_name);
 
         return view("item::backend.$module_path.create");
-
     }
 
 
@@ -131,21 +119,19 @@ class RoomItemsController extends Controller
         // Validate the request...
 
         $RoomItems = new RoomItems;
-        $sameRoomItems=   $RoomItems->where('name',$request->name)->get();
-        if($sameRoomItems->isEmpty()){
-        $RoomItems->name = $request->name;
-        $RoomItems->description = $request->description;
+        $sameRoomItems=   $RoomItems->where('name', $request->name)->get();
+        if ($sameRoomItems->isEmpty()) {
+            $RoomItems->name = $request->name;
+            $RoomItems->description = $request->description;
 
-        $save = $RoomItems->save();
+            $save = $RoomItems->save();
 
 
-		echo json_encode(array('response'=>$save, 'data'=>$RoomItems));
-		die();}
-        else{
-
-            echo json_encode(array('response'=>'similler item exist'));
+            echo json_encode(['response'=>$save, 'data'=>$RoomItems]);
             die();
-
+        } else {
+            echo json_encode(['response'=>'similler item exist']);
+            die();
         }
     }
 
@@ -192,46 +178,44 @@ class RoomItemsController extends Controller
         //     $count++;
         //     var_dump($dbrow);
         //     echo '<br>';
-            for ($i=0; $i<sizeof($quantity); $i++) {
-                $item = RoomItems::where('roomid',$roomid)->where('itemid',$nameid[$i])->get();
-                 if($item->isEmpty()){
-                   if( $quantity[$i]<=0)
-                   continue;
-                    DB::table('room_items')->insert(['quantity'=>  $quantity[$i],'roomid'=>$roomid,'itemid'=>$nameid[$i]]);
-                    $room=Room::where('id',$roomid[$i])->first();
-                    $item=Item::where('id',$nameid[$i])->first();
-                    $arr['itemname']=$item->name;
-                    $arr['roomid']=$room->code;
-                    $arr['quantity']=$quantity[$i];
+        for ($i=0; $i<sizeof($quantity); $i++) {
+            $item = RoomItems::where('roomid', $roomid)->where('itemid', $nameid[$i])->get();
+            if ($item->isEmpty()) {
+                if ($quantity[$i]<=0) {
+                    continue;
+                }
+                DB::table('room_items')->insert(['quantity'=>  $quantity[$i],'roomid'=>$roomid,'itemid'=>$nameid[$i]]);
+                $room=Room::where('id', $roomid[$i])->first();
+                $item=Item::where('id', $nameid[$i])->first();
+                $arr['itemname']=$item->name;
+                $arr['roomid']=$room->code;
+                $arr['quantity']=$quantity[$i];
 
-                    $arr['usname']=Auth::user()->name;
-                    $arr['usid']=Auth::user()->id;
-                    $receptionusers = User::role('reception')->get();
-                    foreach( $receptionusers as  $receptionuser )
+                $arr['usname']=Auth::user()->name;
+                $arr['usid']=Auth::user()->id;
+                $receptionusers = User::role('reception')->get();
+                foreach ($receptionusers as  $receptionuser) {
                     $receptionuser->notify(new AddItemsToRooms($arr));
-                    $superadminusers = User::role('super admin')->get();
-                    foreach( $superadminusers as  $superadminuser )
+                }
+                $superadminusers = User::role('super admin')->get();
+                foreach ($superadminusers as  $superadminuser) {
                     $superadminuser->notify(new AddItemsToRooms($arr));
-
                 }
-                else
-                {
-                    if( $quantity[$i]<=0)
-                    DB::table('room_items')->where('roomid',$roomid)->where('itemid',$nameid[$i])->delete();
-
-                    else
-
-                    DB::table('room_items')->where('roomid',$roomid)->where('itemid',$nameid[$i])->update(['quantity'=> $quantity[$i]]);
-
+            } else {
+                if ($quantity[$i]<=0) {
+                    DB::table('room_items')->where('roomid', $roomid)->where('itemid', $nameid[$i])->delete();
+                } else {
+                    DB::table('room_items')->where('roomid', $roomid)->where('itemid', $nameid[$i])->update(['quantity'=> $quantity[$i]]);
                 }
-             }
+            }
+        }
 
 
-            // $save =  DB::table('room_items')->whereIn('itemid', $value->itemid)->update($value->quantity);
+        // $save =  DB::table('room_items')->whereIn('itemid', $value->itemid)->update($value->quantity);
         // }
 
-		  echo json_encode(array('response'=>true));
-		die();
+        echo json_encode(['response'=>true]);
+        die();
     }
 
     /**
@@ -246,10 +230,9 @@ class RoomItemsController extends Controller
 
         $roomid=$id[0];
         $itemid=$id[1];
-             $delete =DB::table('room_items')->where('itemid',$itemid)->where('roomid',$roomid)->delete();
+        $delete =DB::table('room_items')->where('itemid', $itemid)->where('roomid', $roomid)->delete();
 
-           echo json_encode(array('response'=>$delete));
-           die();
-
-}
+        echo json_encode(['response'=>$delete]);
+        die();
+    }
 }

@@ -11,16 +11,16 @@
 |
 */
 
-Route::group( //start LOCALIZED Routes 
+Route::group( //start LOCALIZED Routes
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function(){ 
-		
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function(){
+
 
     Route::group(['namespace' => '\Modules\Reservation\Http\Controllers', 'prefix' => 'admin', 'middleware' => ['auth', 'can:view_backend']], function () {
-       
-       
-       
+
+
+
         /*
      *
      *  reservation Routes
@@ -31,7 +31,7 @@ Route::group( //start LOCALIZED Routes
             $controller_name = 'ReservationController';
             Route::get("$module_name/", $controller_name.'@index' )->name('reservation.index');
             Route::get("$module_name/showrooms", $controller_name.'@indexrooms' )->name('reservation.indexrooms');
- 
+
             Route::get($module_name.'/gettable', $controller_name.'@gettable')->name('reservation.gettable');
             Route::get($module_name.'/showroomsgettable', $controller_name.'@showroomsgettable')->name('reservation.showroomsgettable');
             Route::get("$module_name/create/{id?}", $controller_name.'@create')->name('reservation.create');
@@ -44,7 +44,7 @@ Route::group( //start LOCALIZED Routes
 
             Route::get("$module_name/destroy/{id?}", $controller_name.'@destroy')->name('reservation.destroy');
             Route::get("$module_name/edit/{id?}", $controller_name.'@edit')->name('reservation.edit');
-       
+
         /*
      *
      *  Reservation Routes
@@ -61,6 +61,7 @@ Route::group( //start LOCALIZED Routes
 			Route::get("$module_name/update", $controller_name.'@update')->name('customer.update');
 
 			Route::get("$module_name/destroy/{id?}", $controller_name.'@destroy')->name('customer.destroy');
-			Route::get("$module_name/edit/{id?}", $controller_name.'@edit')->name('customer.edit');
+            Route::get("$module_name/edit/{id?}", $controller_name.'@edit')->name('customer.edit');
+            Route::get("$module_name/blacklist/{id?}", $controller_name.'@blackList')->name('customer.blackList');
 	});
 });

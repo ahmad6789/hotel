@@ -10,22 +10,24 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group( //start LOCALIZED Routes 
+Route::group( //start LOCALIZED Routes
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function(){ 
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function(){
 // all localized routes put them here
 
         // Auth Routes
     require __DIR__.'/auth.php';
-    
+
     // frontend Routes
     require __DIR__.'/frontend.php';
 
         // backend Routes
   require __DIR__.'/backend.php';
 
-}); // ENd LOCALIZED Routes 
+
+
+}); // ENd LOCALIZED Routes
 
 // if you have not localized routes put them outside perviouse group, in the following section
 // not localized routes, puth them here

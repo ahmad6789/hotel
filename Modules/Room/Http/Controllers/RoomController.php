@@ -147,6 +147,7 @@ class RoomController extends Controller
         $room->code = $request->code;
         $room->capacity = $request->capacity;
         $room->price = $request->price;
+        $room->people = $request->people;
         $room->categoryid = $request->categoryid;
         $room->status = $request->status;
 
@@ -234,6 +235,7 @@ class RoomController extends Controller
         $room = Room::where('id',$request->id)->first();
         $room->capacity = $request->capacity;
         $room->price = $request->price;
+        $room->people = $request->people;
         $room->categoryid = $request->categoryid;
         $room->status = $request->status;
         $save = $room->save();

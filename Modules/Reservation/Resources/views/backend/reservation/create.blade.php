@@ -21,7 +21,7 @@
 						<option value="">{{ __("reservation.selectcustomer")}}</option>
 							@isset($customers)
 								@foreach ($customers as $customer)
-									<option value="{{ $customer->id }}" @isset($reservation) @if($customer->id == $reservation->customerid) selected="selected" @endif @endisset>{{ $customer->firstname }} {{ $customer->lastname }} ({{ $customer->idnumber }})</option>
+									<option @if($customer->blacklist==1) disabled @endif value="{{ $customer->id }}" @isset($reservation) @if($customer->id == $reservation->customerid) selected="selected" @endif @endisset>{{ $customer->firstname }} {{ $customer->lastname }} ({{ $customer->idnumber }}) @if($customer->blacklist==1) [{{ __('reservation.Blocked')}}] @endif</option>
 								@endforeach
 							@endisset
 					</select>

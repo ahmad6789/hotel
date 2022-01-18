@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Modules\Room\Entities\Room;
 
 class BackendController extends Controller
 {
@@ -13,6 +14,7 @@ class BackendController extends Controller
      */
     public function index()
     {
+
         return view('backend.index');
     }
 }

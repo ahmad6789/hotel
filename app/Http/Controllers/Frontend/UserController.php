@@ -6,15 +6,21 @@ use App\Authorizable;
 use App\Events\Frontend\UserProfileUpdated;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
+use App\Models\Labrere;
 use App\Models\Permission;
+use App\Models\RewardOrPunishment;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Userprofile;
 use App\Models\UserProvider;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Log;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
@@ -90,7 +96,7 @@ class UserController extends Controller
         if ($$module_name_singular) {
             $userprofile = Userprofile::where('user_id', $id)->first();
         } else {
-            Log::error('UserProfile Exception for Username: '.$username);
+            Log::error('UserProfile Exception for Username: ' . $username);
             abort(404);
         }
 
@@ -120,7 +126,7 @@ class UserController extends Controller
         $module_action = 'Edit Profile';
 
         $page_heading = ucfirst($module_title);
-        $title = $page_heading.' '.ucfirst($module_action);
+        $title = $page_heading . ' ' . ucfirst($module_action);
 
         if (!auth()->user()->can('edit_users')) {
             $id = auth()->user()->id;
@@ -145,7 +151,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -195,7 +201,7 @@ class UserController extends Controller
 
         $data_array = $request->except('avatar');
         $data_array['avatar'] = $$module_name_singular->avatar;
-        $data_array['name'] = $request->first_name.' '.$request->last_name;
+        $data_array['name'] = $request->first_name . ' ' . $request->last_name;
 
         $user_profile = Userprofile::where('user_id', '=', $$module_name_singular->id)->first();
         $user_profile->update($data_array);
@@ -241,7 +247,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -306,7 +312,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -372,7 +378,7 @@ class UserController extends Controller
             if ($user_id == $user_provider->user->id) {
                 $user_provider->delete();
 
-                flash('<i class="fas fa-exclamation-triangle"></i> Unlinked from User, "'.$user_provider->user->name.'"!')->success();
+                flash('<i class="fas fa-exclamation-triangle"></i> Unlinked from User, "' . $user_provider->user->name . '"!')->success();
 
                 return redirect()->back();
             } else {
@@ -394,9 +400,9 @@ class UserController extends Controller
     {
         if ($id != auth()->user()->id) {
             if (auth()->user()->hasAnyRole(['administrator', 'super admin'])) {
-                Log::info(auth()->user()->name.' ('.auth()->user()->id.') - User Requested for Email Verification.');
+                Log::info(auth()->user()->name . ' (' . auth()->user()->id . ') - User Requested for Email Verification.');
             } else {
-                Log::warning(auth()->user()->name.' ('.auth()->user()->id.') - User trying to confirm another users email.');
+                Log::warning(auth()->user()->name . ' (' . auth()->user()->id . ') - User trying to confirm another users email.');
 
                 abort('404');
             }
@@ -406,7 +412,7 @@ class UserController extends Controller
 
         if ($user) {
             if ($user->email_verified_at == null) {
-                Log::info($user->name.' ('.$user->id.') - User Requested for Email Verification.');
+                Log::info($user->name . ' (' . $user->id . ') - User Requested for Email Verification.');
 
                 // Send Email To Registered User
                 $user->sendEmailVerificationNotification();
@@ -415,12 +421,289 @@ class UserController extends Controller
 
                 return redirect()->back();
             } else {
-                Log::info($user->name.' ('.$user->id.') - User Requested but Email already verified at.'.$user->email_verified_at);
+                Log::info($user->name . ' (' . $user->id . ') - User Requested but Email already verified at.' . $user->email_verified_at);
 
-                flash($user->name.', You already confirmed your email address at '.$user->email_verified_at->isoFormat('LL'))->success()->important();
+                flash($user->name . ', You already confirmed your email address at ' . $user->email_verified_at->isoFormat('LL'))->success()->important();
 
                 return redirect()->back();
             }
         }
+    }
+
+    public function labrereindex()
+    {
+        return view("expense::backend.labreres.index");
+    }
+
+    public function gettable(Request $request, $type = null)
+    {
+        if ($request->ajax()) {
+            $expense = DB::select('SELECT * FROM labreres');
+
+            $data = $expense;
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+
+                    return $btn;
+                })
+                ->addColumn('Name', function ($row) {
+                    $typename = $row->firstname . " " . $row-> lastname;
+
+                    return $typename;
+                })
+                ->addColumn('birthdate', function ($row) {
+                    $typename = $row->birthdate ;
+
+                    return $typename;
+                })
+                ->addColumn('sex', function ($row) {
+                    $typename = $row->sex ;
+
+                    return $typename;
+                })
+                ->addColumn('phone', function ($row) {
+                    $typename = $row->phone ;
+
+                    return $typename;
+                })
+                ->addColumn('address', function ($row) {
+                    $typename = $row->address ;
+
+                    return $typename;
+                })
+                ->addColumn('country', function ($row) {
+                    $typename = $row->country ;
+
+                    return $typename;
+                })
+                ->addColumn('nationality', function ($row) {
+                    $typename = $row->nationality;
+
+                    return $typename;
+                })
+
+                ->addColumn('action', function ($row) {
+                    $user = Auth::user();
+                    $roles = $user->getRoleNames();
+
+                    foreach ($roles as $role) {
+                        if ($role!="roomservice" || $role="super admin") {
+                            $perm=$role;
+                        } else {
+                            $perm="NOPerm";
+                        }
+                    }
+                    if ($perm=="super admin") {
+                        $btn = '
+                        <a href="#" data-id="'.$row->id.'" class="btn btn-success btn-sm  edit"title=" '. __('reservation.EditLaborere'). '"> <i class="fa fa-wrench"></i></a>
+                        <a href="#" data-id="'.$row->id.'"
+                        class="btn btn-danger btn-sm  delete" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></a>
+
+
+                        ';
+                    } elseif ($perm=="roomservice") {
+                        $btn ='
+                            ';
+                    } else {
+                        $btn='';
+                    }
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function createlabrere()
+    {
+        $edit = false;
+        return view("expense::backend.labreres.create", compact('edit'));
+    }
+    public function storelabrere(Request $request)
+    {
+        try {
+            $laberer = new Labrere();
+            $laberer->firstname = $request->firstname;
+            $laberer->lastname = $request->lastname;
+            $laberer->birthdate = $request->birthdate;
+            $laberer->sex = $request->sex;
+            $laberer->phone = $request->phone;
+            $laberer->address = $request->address;
+            $laberer->city = $request->city;
+            $laberer->country = $request->country;
+            $laberer->nationality = $request->nationality;
+            $laberer->save();
+        } catch (\Exception $e) {
+            return $e->getMessage() . $e->getCode();
+        }
+
+        return view("expense::backend.labreres.index");
+    }
+    public function editlabrere($id)
+    {
+        $edit = true;
+        $labrere = Labrere::find($id);
+        return view("expense::backend.labreres.create", compact('edit', 'labrere'));
+    }
+    public function deletelabrere($id)
+    {
+        Labrere::where('id', $id)->delete();
+        return view("expense::backend.labreres.index");
+    }
+    public function updatelabrere(Request $request, $id)
+    {
+        try {
+            $laberer = Labrere::where('id', $id)->first();
+            $laberer->firstname = $request->firstname;
+            $laberer->lastname = $request->lastname;
+            $laberer->birthdate = $request->birthdate;
+            $laberer->sex = $request->sex;
+            $laberer->phone = $request->phone;
+            $laberer->address = $request->address;
+            $laberer->city = $request->city;
+            $laberer->country = $request->country;
+            $laberer->nationality = $request->nationality;
+            $laberer->save();
+        } catch (\Exception $e) {
+            return $e->getMessage() . $e->getCode();
+        }
+        return view("expense::backend.labreres.index");
+    }
+    public function RewardOrPunishment(Request $request, $type =null)
+    {
+        if ($request->ajax()) {
+            if ($type=='p') {
+                $expense = DB::select("  SELECT * FROM rewardorpunishment WHERE type ='p'  ");
+            } elseif ($type=='r') {
+                $expense = DB::select("  SELECT * FROM rewardorpunishment WHERE type ='r'  ");
+            }
+
+            $data = $expense;
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function ($row) {
+                        $btn = '';
+
+                        return $btn;
+                    })
+                    ->addColumn('labrere', function ($row) {
+                        $typename = $row->labrere;
+
+                        return $typename;
+                    })
+                    ->addColumn('type', function ($row) {
+                        $typename = $row->type ;
+
+                        return $typename;
+                    })
+                    ->addColumn('why', function ($row) {
+                        $typename = $row->why ;
+
+                        return $typename;
+                    })
+                    ->addColumn('date', function ($row) {
+                        $typename = $row->date ;
+
+                        return $typename;
+                    })
+
+                    ->addColumn('action', function ($row) {
+                        $user = Auth::user();
+                        $roles = $user->getRoleNames();
+
+                        foreach ($roles as $role) {
+                            if ($role!="roomservice" || $role="super admin") {
+                                $perm=$role;
+                            } else {
+                                $perm="NOPerm";
+                            }
+                        }
+                        if ($perm=="super admin") {
+                            $btn = '
+                        <a href="#" data-id="'.$row->id.'"
+                        class="btn btn-danger btn-sm  delete" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></a>
+
+
+                        ';
+                        } elseif ($perm=="roomservice") {
+                            $btn ='
+                            ';
+                        } else {
+                            $btn='';
+                        }
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+    }
+    public function showReward()
+    {
+        $type ='r';
+        return view("expense::backend.labreres.showrorp", compact('type'));
+    }
+    public function showPunishment()
+    {
+        $type ='p';
+        return view("expense::backend.labreres.showrorp", compact('type'));
+    }
+    public function createPunishment()
+    {
+        $type ='p';
+        return view("expense::backend.labreres.createRorP", compact('type'));
+    }
+    public function createReward()
+    {
+        $type ='r';
+        return view("expense::backend.labreres.createRorP", compact('type'));
+    }
+    public function storeReward(Request $request)
+    {
+        $labrere_s =  Labrere::where('id', $request->labrere)->first();
+        $type = 'r';
+
+        $re = new RewardOrPunishment();
+
+        $re->customer_id = $request->input('labrere');
+
+        $re->labrere = $labrere_s->firstname .' ' . $labrere_s->lastname;
+
+        $re->price = $request->input('price');
+
+        $re->date = $request->input('date');
+
+        $re->type = $type;
+
+        $re->why = $request->input('why');
+
+        $re->save();
+    }
+    public function storePunishment(Request $request)
+    {
+        $labrere_s =  Labrere::where('id', $request->labrere)->first();
+        $type = 'p';
+
+        $re = new RewardOrPunishment();
+
+        $re->customer_id = $request->input('labrere');
+
+        $re->labrere = $labrere_s->firstname .' ' . $labrere_s->lastname;
+
+        $re->price = $request->input('price');
+
+        $re->date = $request->input('date');
+
+        $re->type = $type;
+
+        $re->why = $request->input('why');
+
+        $re->save();
+    }
+
+    public function RewardorPunishmentDelete($id)
+    {
+        RewardOrPunishment::where('id', $id)->delete();
     }
 }

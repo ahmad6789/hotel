@@ -5,7 +5,7 @@
         <center>
             <h1 class="text-success mt-4">{{ __("payment.expenses") }} @if(isset($from) && !empty($from)) {{__('reservation.from')}} {{$from}} {{__('reservation.to')}} {{$to}} @endif</h1>
         </center>
-		
+
 		<div>
 			{{ Form::open(array('url' => route('report.expenses'))) }}
 				<div class="form-row align-items-end">
@@ -36,9 +36,9 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="form-row align-items-end">
-					
+
 					<div class="col col-md-4">
 						<div class="form-group">
 							<label for="addedby">{{__('payment.addedby')}}</label>
@@ -69,9 +69,9 @@
 				</div>
 			{{ Form::close() }}
 		</div>
-		
+
         <div clsss="table-responsive">
-            
+
             <table class="table data-table table-bordered table-condensed table-hover table-striped bg-white">
                 <thead>
 					<tr class="text-center">
@@ -84,7 +84,7 @@
                     </tr>
                 </thead>
                 <tbody>
-					
+
 					@foreach ($rows as $row)
 						<tr class="text-center">
 							<td class='' >{{$row->id}}</th>
@@ -95,7 +95,7 @@
 							<td class='' >{{$row->addedbyname}}</th>
 						</tr>
 					@endforeach
-					
+
                 </tbody>
             </table>
         </div>
@@ -105,8 +105,8 @@
 			$.noConflict();
 			$('.data-table').DataTable({
 				bSort : false,
-				searching: false, 
-				paging: false, 
+				searching: false,
+				paging: false,
 				info: false,
 				"pageLength": 50,
 				"dom": 'B<"toolbar"><"top fg-toolbar ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"flip>t<"bottom fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip><"clear">',

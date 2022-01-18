@@ -12,9 +12,29 @@ return [
     |
     */
 
+    'laboreres' =>'Laboreres',
+    'laborere' =>'laborere',
+    'addLaborere' => 'Add Laborere',
+    'EditLaborere' => 'Edit Laborere',
+    'selectLaborere'=>'Select Laborere',
+    'showPunishment' => 'Punishment',
+    'showReward' => 'Reward',
+
+    'addPunishment' => 'add Punishment ',
+    'addReward' => 'add Reward',
+    'value'=>'value',
+    'reason' => 'reason',
+    'date' => 'date',
+    'Why' => 'Why',
+
+    'Block'   => 'Block',
+    'UnBlock'   => 'Un Block',
+    'Blocked' =>'Blocked',
+
     'customer'   => 'Customer',
     'firstname'   => 'First name',
     'lastname'   => 'Last name',
+    'select'=>'ٍSelect',
     'idnumber'   => 'ID number',
     'phone'   => 'Phone',
     'phone1'   => 'Phone',

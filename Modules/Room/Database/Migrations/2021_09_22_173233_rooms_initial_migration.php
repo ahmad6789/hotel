@@ -20,19 +20,20 @@ class RoomsInitialMigration extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-		
+
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
             $table->string('capacity');
 			$table->Integer('price');
+            $table->Integer('people');
             $table->unsignedBigInteger('categoryid');
             $table->tinyInteger('status')->default(1)->unsigned();
 			$table->timestamps();
             $table->softDeletes();
 			$table->foreign('categoryid')->references('id')->on('room_categories');
         });
-		
+
 		Schema::create('room_beds', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');

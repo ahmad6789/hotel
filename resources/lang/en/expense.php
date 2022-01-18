@@ -11,6 +11,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'delete'=>'delete',
+    'deleteconfirm'=>'Pleas Confirm To Delete it',
     'edit'=>'edit',
     'expense'   => 'Expense',
     'add'   => 'Add',

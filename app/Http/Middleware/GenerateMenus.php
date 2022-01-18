@@ -24,12 +24,12 @@ class GenerateMenus
         */
 
         \Menu::make('admin_sidebar', function ($menu) {
-            // Dashboard 
+            // Dashboard
             $menu->add('<i class="cil-speedometer c-sidebar-nav-icon"></i> ' . trans('oa_menues.backend.sidebar.dashboard') , [
                 'route' => 'backend.dashboard',
                 'class' => 'c-sidebar-nav-item',
             ])
-            ->data([ 
+            ->data([
                 'order'         => 1,
                 'activematches' => 'admin/dashboard*',
             ])
@@ -117,7 +117,7 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-          
+
              // Submenu: Manage Items
              $accessControl->add('<i class="c-sidebar-nav-icon cil-american-football"></i> ' . trans('Room.Manage') . ' '.trans('Items.The Items'), [
                 'route' => 'item.index',
@@ -131,7 +131,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-            
+
              // Submenu: Add Items
              $accessControl->add('<i class="c-sidebar-nav-icon cil-menu"></i> ' . trans('Items.Add') . ' '.trans('Items.Item'), [
                 'route' => 'item.create',
@@ -145,7 +145,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
 			////////
 			// Reservations menu
             $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-book"></i> ' . trans('reservation.reservations'), [
@@ -161,7 +161,7 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-          
+
              // Submenu: Manage reservations
              $accessControl->add('<i class="c-sidebar-nav-icon cil-book"></i> ' . trans('reservation.reservationmanagement'), [
                 'route' => 'reservation.index',
@@ -175,7 +175,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-            
+
              // Submenu: Add reservation
              $accessControl->add('<i class="c-sidebar-nav-icon fa fas fa-plus"></i> ' . trans('reservation.create'), [
                 'route' => 'reservation.create',
@@ -189,7 +189,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
 			// Submenu: Room status
              $accessControl->add('<i class="c-sidebar-nav-icon fa fas fa-eye"></i> ' . trans('reservation.roomstatus'), [
                 'route' => 'reservation.indexrooms',
@@ -203,7 +203,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
 			// Submenu: customers
              $accessControl->add('<i class="c-sidebar-nav-icon fa fas fa-users"></i> ' . trans('reservation.customers'), [
                 'route' => 'customer.index',
@@ -217,7 +217,8 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
+
 			/////////////////////
 			// Payments menu
             $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-money"></i> ' . trans('payment.payments'), [
@@ -233,7 +234,7 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-          
+
              // Submenu: Manage payments
              $accessControl->add('<i class="c-sidebar-nav-icon cil-list"></i> ' . trans('payment.payments'), [
                 'route' => 'payment.index',
@@ -247,8 +248,8 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-            
-			
+
+
             // Ticket menu
             $accessControl = $menu->add('<i class="c-sidebar-nav-icon fa fa-tasks"></i> ' . trans('Ticket.The Tickets'), [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -275,8 +276,8 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-            
-                
+
+
              // Submenu: Add ticket
              $accessControl->add('<i class="c-sidebar-nav-icon fa fa-plus-square"></i> ' . trans('Ticket.Add') . ' '.trans('Ticket.Ticket'), [
                 'route' => 'ticket.create',
@@ -290,7 +291,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-                
+
              // Submenu: view log
              $accessControl->add('<i class="c-sidebar-nav-icon fa fa-table"></i> ' . trans('Room.View') . ' '.trans('Items.Log'), [
                 'route' => 'ticketsActivities.index',
@@ -304,7 +305,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
 			/////////////////////
 			// Expenses menu
             $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-money"></i> ' . trans('expense.expenses'), [
@@ -320,7 +321,7 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-          
+
              // Submenu: Manage payments
              $accessControl->add('<i class="c-sidebar-nav-icon cil-list"></i> ' . trans('expense.expenses'), [
                 'route' => 'expense.index',
@@ -334,7 +335,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
 			 $accessControl->add('<i class="c-sidebar-nav-icon cil-list"></i> ' . trans('expense.addexpense'), [
                 'route' => 'expense.create',
                 'class' => 'nav-item',
@@ -347,8 +348,8 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
-			
+
+
 			/////////////////////
 			// Reports menu
             $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-money"></i> ' . trans('payment.reports'), [
@@ -364,7 +365,7 @@ class GenerateMenus
                 'href'  => '#',
             ]);
 
-          
+
              // Submenu: Manage payments
              $accessControl->add('<i class="c-sidebar-nav-icon cil-list"></i> ' . trans('payment.profitloss'), [
                 'route' => 'report.profitloss',
@@ -378,7 +379,7 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
+
 			 $accessControl->add('<i class="c-sidebar-nav-icon cil-list"></i> ' . trans('payment.expenses'), [
                 'route' => 'report.expenses',
                 'class' => 'nav-item',
@@ -391,8 +392,8 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
-			
-			
+
+
             // Notifications
             $menu->add('<i class="c-sidebar-nav-icon fas fa-bell"></i>' . trans('oa_menues.backend.sidebar.notifications') , [
                 'route' => 'backend.notifications.index',
@@ -415,8 +416,8 @@ class GenerateMenus
                 'order'         => 110,
                 'permission'    => ['edit_settings', 'view_backups', 'view_users', 'view_roles', 'view_logs'],
             ]);
-         
-                 // 
+
+                 //
             // Access Control Dropdown
             $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-shield-alt"></i> ' . trans('oa_menues.backend.sidebar.access_control'), [
                 'class' => 'c-sidebar-nav-dropdown',
@@ -504,6 +505,53 @@ class GenerateMenus
             ->link->attr([
                 'class' => 'c-sidebar-nav-link',
             ]);
+
+
+                $accessControl = $menu->add('<i class="c-sidebar-nav-icon cil-money"></i> ' . trans('reservation.laboreres'), [
+                    'class' => 'c-sidebar-nav-dropdown',
+                ])
+                    ->data([
+                        'order'         => 50,
+                        'activematches' => 'admin/payment*',
+                        'permission'    => ['view_payments'],
+                    ]);
+            $accessControl->link->attr([
+                'class' => 'c-sidebar-nav-dropdown-toggle',
+                'href'  => '#',
+            ]);
+            $accessControl->add('<i class="c-sidebar-nav-icon cil-list-numbered"></i>' . trans('reservation.laboreres'), [
+                'route' => 'frontend.users.index',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 51,
+                    'activematches' => 'admin/log-viewer/logs*',
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
+            $accessControl->add('<i class="c-sidebar-nav-icon cil-list-numbered"></i>' . trans('reservation.showPunishment'), [
+                'route' => 'frontend.users.showPunishment',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 52,
+                    'activematches' => 'admin/log-viewer/logs*',
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
+            $accessControl->add('<i class="c-sidebar-nav-icon cil-list-numbered"></i>' . trans('reservation.showReward'), [
+                'route' => 'frontend.users.showReward',
+                'class' => 'nav-item',
+            ])
+                ->data([
+                    'order'         => 53,
+                    'activematches' => 'admin/log-viewer/logs*',
+                ])
+                ->link->attr([
+                    'class' => 'c-sidebar-nav-link',
+                ]);
 
             /* Access Permission Check
             * Filtering the Items

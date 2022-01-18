@@ -11,7 +11,24 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'laboreres' =>'العمال',
+    'laborere' =>'عامل',
+    'addLaborere' => 'أضافة عامل',
+    'EditLaborere' => 'تعديل العامل',
+    'selectLaborere'=>'أختار عامل',
+    'showPunishment' => 'العقوبة',
+    'showReward' => 'المكافئة',
+    'date' => 'التاريخ',
+    'Why' => 'السبب',
 
+    'addPunishment' => 'أضافة عقوبة',
+    'addReward' => 'أضافة مكافئة',
+    'value'=>'القيمة',
+    'reason' => 'السبب',
+
+    'Block'   => 'حظر',
+    'UnBlock'   => 'إلغاء الحظر',
+    'Blocked' =>'محظور',
     'customer'   => 'زبون',
     'firstname'   => 'الاسم',
     'lastname'   => 'الكنية',
@@ -34,6 +51,7 @@ return [
     'reservations'   => 'الحجوزات',
     'reservationmanagement'   => 'إدارة الحجوزات',
     'room'   => 'الغرفة',
+    'select'=>'أختار',
     'status'   => 'الحالة',
     'bookingstart'   => 'من',
     'bookingend'   => 'إلى',

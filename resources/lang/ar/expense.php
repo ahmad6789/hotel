@@ -11,6 +11,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'delete'=>'حذف',
+    'deleteconfirm'=>'يرجى التأكيد للحذف',
     'edit'=>'تعديل',
     'expense'   => 'دفعة مصاريف',
     'add'   => 'إضافة',

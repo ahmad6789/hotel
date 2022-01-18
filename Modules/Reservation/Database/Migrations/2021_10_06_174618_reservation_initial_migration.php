@@ -25,7 +25,7 @@ class ReservationInitialMigration extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-		
+
 		Schema::create('customer', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('firstname');
@@ -35,9 +35,10 @@ class ReservationInitialMigration extends Migration
 			$table->string('idtype');
 			$table->string('idnumber');
 			$table->string('phone1');
+            $table->Integer('blacklist')->nullable();
 			$table->string('phone2')->nullable();
-			$table->string('email');
-			$table->string('address1');
+			$table->string('email')->nullable();
+			$table->string('address1')->nullable();
 			$table->string('address2')->nullable();
 			$table->string('city');
 			$table->string('country');
@@ -45,6 +46,9 @@ class ReservationInitialMigration extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+
+
     }
 
     /**

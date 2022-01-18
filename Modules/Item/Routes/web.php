@@ -11,16 +11,16 @@
 |
         */
 
-        Route::group( //start LOCALIZED Routes 
+        Route::group( //start LOCALIZED Routes
             [
                 'prefix' => LaravelLocalization::setLocale(),
-                'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function(){ 
-                
+                'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function(){
+
 
             Route::group(['namespace' => '\Modules\Item\Http\Controllers', 'prefix' => 'admin', 'middleware' => ['auth', 'can:view_backend']], function () {
-            
+
         $module_name = 'item';
-                    
+
         Route::get("$module_name/", 'ItemController@index' )->name('item.index');;
 
         Route::get($module_name .'/gettable', 'ItemController@gettable')->name('item.gettable');
@@ -30,16 +30,16 @@
 
         Route::get("$module_name/destroy/{id?}", 'ItemController@destroy')->name('item.destroy');
         Route::get("$module_name/edit/{id?}", 'ItemController@edit')->name('item.edit');
-     
+
 
         $module_name = 'roomItems';
-                    
+
         Route::get("$module_name/index/{id?}", 'RoomItemsController@index' )->name('roomItems.index');;
         Route::get($module_name .'/gettable/{id?}', 'RoomItemsController@gettable')->name('roomItems.gettable');
         Route::get("$module_name/create", 'RoomItemsController@create')->name('roomItems.create');
         Route::get("$module_name/store", 'RoomItemsController@store')->name('roomItems.store');
         Route::get("$module_name/update", 'RoomItemsController@update')->name('roomItems.update');
-        
+
 
         Route::get("$module_name/destroy/{id?}", 'RoomItemsController@destroy')->name('roomItems.destroy');
         Route::get("$module_name/edit/{id?}", 'RoomItemsController@edit')->name('roomItems.edit');

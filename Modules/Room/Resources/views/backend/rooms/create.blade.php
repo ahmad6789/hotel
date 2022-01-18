@@ -7,8 +7,8 @@
             style="width:40%; height: 50%;margin: 0px auto; box-shadow:  0 0 10px  #303c54;  border-radius:25px; background-color:#fff;padding:25px;  border: solid 1px #555;">
             <h1 class="text-center" style="color:#303c54">
                 @isset($roomEdit)
-                {{__('Room.Edit')}} {{__('Room.Room')}}  
-                @else 
+                {{__('Room.Edit')}} {{__('Room.Room')}}
+                @else
 
                 {{__('Room.Add')}} {{__('Room.Room')}}
                 @endisset
@@ -24,14 +24,24 @@
 
             </div>
             <div class="form-group">
-                <label for="capacity">{{__('Room.capacity')}}</label>
-                <input class="form-control" @isset($roomEdit)value="{{ $roomEdit->capacity }}" @endisset type="number"
-                    id="capacity" name="capacity" required>
+
+                <select class="form-control" id="capacity" name="capacity" required>
+                    <option value="">{{__('Room.capacity')}} ...</option>
+                    <option @isset($roomEdit)@if( $roomEdit->capacity==1) selected @endif  @endisset  value="1">{{__('Room.OnBed')}}</option>
+                    <option @isset($roomEdit) @if( $roomEdit->capacity==2) selected @endif  @endisset value="2">{{__('Room.TowBed')}}</option>
+                    <option @isset($roomEdit)@if( $roomEdit->capacity==4) selected @endif  @endisset  value="4">{{__('Room.FourthBed')}} </option>
+
+                </select>
             </div>
             <div class="form-group">
                 <label for="price">{{__('Room.price')}}</label>
                 <input class="form-control" @isset($roomEdit)value="{{ $roomEdit->price }}" @endisset type="number"
                     id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="price">{{__('Room.people')}}</label>
+                <input class="form-control" @isset($roomEdit)value="{{ $roomEdit->people }}" @endisset type="number"
+                       id="people" name="people" required>
             </div>
 
             <div class="form-group">
@@ -84,7 +94,7 @@
 
         success = "<i class=' c-icon cil-check'></i> {{__('Room.SUCCESS')}}! <p>{{__('Room.Adding Successfully')}}</p>";
         exist = "<i class=' c-icon cil-warning'></i> {{__('Room.ERROR')}}! <p>{{__('Room.Room Already Exist')}}</p>"
-   
+
         $('#addRoom').on('submit', function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -100,17 +110,17 @@
                 data:data,
                 success:function(data){
                 if(data.response==true){
-                    $("#formId").submit(); 
-              
+                    $("#formId").submit();
+
                 }
                 else{
                 displayPopupNotification(exist);
                 }
                 }
                 });
-            
+
             @else
-            
+
                 $.ajax({
                 url: "{{ route('room.store') }}",
                 type:'get',
@@ -118,7 +128,7 @@
                 data:data,
                 success:function(data){
                 if(data.response==true){
-            
+
                 displayPopupNotification(success);
                 }
                 else{
@@ -126,7 +136,7 @@
                 }
                 }
                 });
-            
+
             @endisset
 
 

@@ -19,12 +19,12 @@
 					<label for="type">{{__('expense.type')}}</label>
 					<select class="form-control" id="type" name="type">
 						<option value="">{{__('expense.selecttype')}}</option>
-						<option value="wages">{{__('expense.wages')}}</option>
-						<option value="purchases">{{__('expense.purchases')}}</option>
-						<option value="repairs">{{__('expense.repairs')}}</option>
-						<option value="bills">{{__('expense.bills')}}</option>
-						<option value="items">{{__('expense.items')}}</option>
-						<option value="drawings">{{__('expense.drawings')}}</option>
+						<option @if($edit==true) @if($expense['type'] == "wages") selected @endif @endif value="wages">{{__('expense.wages')}}</option>
+						<option @if($edit==true) @if($expense['type']== "purchases") selected @endif @endif value="purchases">{{__('expense.purchases')}}</option>
+						<option @if($edit==true) @if($expense['type']== "repairs") selected @endif @endif value="repairs">{{__('expense.repairs')}}</option>
+						<option @if($edit==true) @if($expense['type']== "bills") selected @endif @endif value="bills">{{__('expense.bills')}}</option>
+						<option @if($edit==true) @if($expense['type'] == "items") selected @endif @endif value="items">{{__('expense.items')}}</option>
+						<option @if($edit==true) @if($expense['type']== "drawings") selected @endif @endif value="drawings">{{__('expense.drawings')}}</option>
 					</select>
 
 				</div>

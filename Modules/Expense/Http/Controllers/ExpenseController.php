@@ -105,6 +105,9 @@ class ExpenseController extends Controller
                     if($perm=="super admin"){
                         $btn = '
                         <a href="#" data-id="'.$row->id.'" class="btn btn-success btn-sm  edit"title="تعديل المصروف"> <i class="fa fa-wrench"></i></a>
+                        <a href="#" data-id="'.$row->id.'"
+                        class="btn btn-danger btn-sm  delete" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash"></i></a>
+
 
                         ';
                     }
